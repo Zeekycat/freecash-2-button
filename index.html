@@ -614,6 +614,29 @@
   <script>
     let isUnder21 = false;
 
+    // Function to merge URL parameters
+    function mergeUrlParams(buttonUrl, pageParams) {
+      const url = new URL(buttonUrl);
+      const buttonParams = new URLSearchParams(url.search);
+      
+      // Merge page parameters into button URL, replacing empty values
+      pageParams.forEach((value, key) => {
+        if (value) { // Only use page param if it has a value
+          const buttonValue = buttonParams.get(key);
+          // Replace if button param is empty or doesn't exist
+          if (!buttonValue || buttonValue === '') {
+            buttonParams.set(key, value);
+          }
+        }
+      });
+      
+      url.search = buttonParams.toString();
+      return url.toString();
+    }
+
+    // Get current page URL parameters
+    const pageParams = new URLSearchParams(window.location.search);
+
     function selectAge(under21) {
       isUnder21 = under21;
       
@@ -637,13 +660,17 @@
       
       // Update button link based on age
       const ctaButton = document.getElementById('ctaButton');
+      let baseUrl;
       if (!isUnder21) {
         // Over 21: Use the specific link
-        ctaButton.href = 'https://www.ch6rrl8trk.com/262DXM/48M9K3/';
+        baseUrl = 'https://www.ch6rrl8trk.com/262DXM/48M9K3/';
       } else {
         // Under 21: Use the alternative link
-        ctaButton.href = 'https://www.ch6rrl8trk.com/262DXM/9B9DM/?sub1=';
+        baseUrl = 'https://www.ch6rrl8trk.com/262DXM/9B9DM/?sub1=';
       }
+      
+      // Merge page URL parameters into button URL
+      ctaButton.href = mergeUrlParams(baseUrl, pageParams);
       
       // Update page title
       document.title = brandName;

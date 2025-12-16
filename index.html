@@ -640,7 +640,7 @@
         <p class="subheadline">Your device is confirmed compatible. We have reserved a sign up bonus for you.</p>
 
         <!-- CTA Button -->
-        <a href="https://www.ch6rrl8trk.com/262DXM/48M9K3/" class="cta-button">
+        <a href="#" class="cta-button" id="cta-over21">
           <span>DOWNLOAD & START EARNING</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
@@ -708,7 +708,7 @@
         <p class="subheadline">Earn cash answering questions and playing games. Your device is perfect for our offers! Complete registration to start testing apps, games & surveys with instant cashouts.</p>
 
         <!-- CTA Button -->
-        <a href="https://www.ch6rrl8trk.com/262DXM/9B9DM/" class="cta-button">
+        <a href="#" class="cta-button" id="cta-under21">
           <span>DOWNLOAD & START EARNING</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
@@ -757,6 +757,34 @@
   </div>
 
   <script>
+    // Get all URL parameters from the current page
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    // Base URLs for each age group
+    const baseURLs = {
+      over21: 'https://www.ch6rrl8trk.com/262DXM/48M9K3/',
+      under21: 'https://www.ch6rrl8trk.com/262DXM/9B9DM/'
+    };
+    
+    // Function to build URL with parameters
+    function buildURL(baseURL) {
+      const buttonUrlObj = new URL(baseURL);
+      
+      // Add/override with all parameters from the current page URL
+      urlParams.forEach((value, key) => {
+        buttonUrlObj.searchParams.set(key, value);
+      });
+      
+      return buttonUrlObj.toString();
+    }
+    
+    // Update both CTA button URLs
+    const ctaOver21 = document.getElementById('cta-over21');
+    const ctaUnder21 = document.getElementById('cta-under21');
+    
+    ctaOver21.href = buildURL(baseURLs.over21);
+    ctaUnder21.href = buildURL(baseURLs.under21);
+    
     function selectAge(ageGroup) {
       document.getElementById('step-one').classList.add('hidden');
       if (ageGroup === 'over21') {

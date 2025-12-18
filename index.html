@@ -6,6 +6,17 @@
   <title>Freecash - Get Paid for Gaming</title>
   <meta name="description" content="Get paid for gaming and scrolling. Earn cash with daily offers, surveys, and games. Sign up bonus available!" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- TikTok Pixel Code Start -->
+  <script>
+    !function (w, d, t) {
+      w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for( var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script") ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+      ttq.load('D40QEC3C77U1STIOVEU0');
+      ttq.page();
+    }(window, document, 'ttq');
+  </script>
+  <!-- TikTok Pixel Code End -->
+  
   <style>
     :root {
       --background: 0 0% 4%;
@@ -757,6 +768,11 @@
   </div>
 
   <script>
+    // Generate unique event ID for TikTok deduplication
+    function makeEventId(eventName) {
+      return eventName + '_' + Date.now() + '_' + Math.random().toString(36).substring(2, 11);
+    }
+
     // Get all URL parameters from the current page
     const urlParams = new URLSearchParams(window.location.search);
     
@@ -784,6 +800,34 @@
     
     ctaOver21.href = buildURL(baseURLs.over21);
     ctaUnder21.href = buildURL(baseURLs.under21);
+    
+    // Add TikTok tracking to CTA buttons
+    function handleCTAClick(e) {
+      e.preventDefault();
+      const targetUrl = e.currentTarget.href;
+      
+      // Fire TikTok AddToCart event
+      const eventId = makeEventId("atc");
+      window.ttq?.track(
+        "AddToCart",
+        {
+          content_type: "product",
+          content_id: "apple-gc-750",
+          value: 0.5,
+          currency: "USD",
+        },
+        { event_id: eventId }
+      );
+      
+      // Short delay to ensure tracking fires, then redirect
+      setTimeout(function() {
+        window.location.href = targetUrl;
+      }, 300);
+    }
+    
+    // Attach click handlers to both CTA buttons
+    ctaOver21.addEventListener('click', handleCTAClick);
+    ctaUnder21.addEventListener('click', handleCTAClick);
     
     function selectAge(ageGroup) {
       document.getElementById('step-one').classList.add('hidden');

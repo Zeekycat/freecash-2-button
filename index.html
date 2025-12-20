@@ -783,12 +783,19 @@
     };
     
     // Function to build URL with parameters
-    function buildURL(baseURL) {
+    function buildURL(baseURL, ageGroup) {
       const buttonUrlObj = new URL(baseURL);
       
       // Add/override with all parameters from the current page URL
       urlParams.forEach((value, key) => {
-        buttonUrlObj.searchParams.set(key, value);
+        let finalValue = value;
+        
+        // If this is sub1 parameter and over21, append "-21"
+        if (key === 'sub1' && ageGroup === 'over21') {
+          finalValue = value + '-21';
+        }
+        
+        buttonUrlObj.searchParams.set(key, finalValue);
       });
       
       return buttonUrlObj.toString();
@@ -798,8 +805,8 @@
     const ctaOver21 = document.getElementById('cta-over21');
     const ctaUnder21 = document.getElementById('cta-under21');
     
-    ctaOver21.href = buildURL(baseURLs.over21);
-    ctaUnder21.href = buildURL(baseURLs.under21);
+    ctaOver21.href = buildURL(baseURLs.over21, 'over21');
+    ctaUnder21.href = buildURL(baseURLs.under21, 'under21');
     
     // Add TikTok tracking to CTA buttons
     function handleCTAClick(e) {

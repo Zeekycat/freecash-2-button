@@ -767,84 +767,113 @@
     </div>
   </div>
 
-  <script>
-    // Generate unique event ID for TikTok deduplication
-    function makeEventId(eventName) {
-      return eventName + '_' + Date.now() + '_' + Math.random().toString(36).substring(2, 11);
-    }
+ <script>
+  // Generate unique event ID for TikTok deduplication
+  function makeEventId(eventName) {
+    return eventName + '_' + Date.now() + '_' + Math.random().toString(36).substring(2, 11);
+  }
 
-    // Get all URL parameters from the current page
-    const urlParams = new URLSearchParams(window.location.search);
-    
-    // Base URLs for each age group
-    const baseURLs = {
-      over21: 'https://www.ch6rrl8trk.com/262DXM/48M9K3/',
-      under21: 'https://www.ch6rrl8trk.com/cmp/M4MBH/4PN2D/'
-    };
-    
-    // Function to build URL with parameters
-    function buildURL(baseURL, ageGroup) {
-      const buttonUrlObj = new URL(baseURL);
+  // Get visitor's country code
+  let userCountryCode = '';
+  
+  async function getCountryCode() {
+    try {
+      const response = await fetch('https://ipapi.co/json/');
+      const data = await response.json();
+      userCountryCode = data.country_code || '';
+      console.log('Detected country:', userCountryCode);
       
-      // Add/override with all parameters from the current page URL
-      urlParams.forEach((value, key) => {
-        let finalValue = value;
-        
-        // If this is sub1 parameter and over21, append "-21"
-        if (key === 'sub1' && ageGroup === 'over21') {
-          finalValue = value + '-21';
-        }
-        
-        buttonUrlObj.searchParams.set(key, finalValue);
-      });
-      
-      return buttonUrlObj.toString();
+      // Update URLs after country is detected
+      updateButtonURLs();
+    } catch (error) {
+      console.error('Error fetching country:', error);
+      // If API fails, still update URLs without country code
+      updateButtonURLs();
     }
+  }
+  
+  // Call on page load
+  getCountryCode();
+
+  // Get all URL parameters from the current page
+  const urlParams = new URLSearchParams(window.location.search);
+  
+  // Base URLs for each age group
+  const baseURLs = {
+    over21: 'https://www.ch6rrl8trk.com/262DXM/48M9K3/',
+    under21: 'https://www.ch6rrl8trk.com/262DXM/9B9DM/'
+  };
+  
+  // Function to build URL with parameters
+  function buildURL(baseURL, ageGroup) {
+    const buttonUrlObj = new URL(baseURL);
     
-    // Update both CTA button URLs
+    // Add/override with all parameters from the current page URL
+    urlParams.forEach((value, key) => {
+      let finalValue = value;
+      
+      // If this is sub1 parameter, append country code and age suffix
+      if (key === 'sub1') {
+        // Add country code if available
+        if (userCountryCode) {
+          finalValue = value + '-' + userCountryCode;
+        }
+        // Add "-21" for over21 users
+        if (ageGroup === 'over21') {
+          finalValue = finalValue + '-21';
+        }
+      }
+      
+      buttonUrlObj.searchParams.set(key, finalValue);
+    });
+    
+    return buttonUrlObj.toString();
+  }
+  
+  // Update both CTA button URLs
+  function updateButtonURLs() {
     const ctaOver21 = document.getElementById('cta-over21');
     const ctaUnder21 = document.getElementById('cta-under21');
     
     ctaOver21.href = buildURL(baseURLs.over21, 'over21');
     ctaUnder21.href = buildURL(baseURLs.under21, 'under21');
+  }
+  
+  // Add TikTok tracking to CTA buttons
+  function handleCTAClick(e) {
+    e.preventDefault();
+    const targetUrl = e.currentTarget.href;
     
-    // Add TikTok tracking to CTA buttons
-    function handleCTAClick(e) {
-      e.preventDefault();
-      const targetUrl = e.currentTarget.href;
-      
-      // Fire TikTok AddToCart event
-      const eventId = makeEventId("atc");
-      window.ttq?.track(
-        "AddToCart",
-        {
-          content_type: "product",
-          content_id: "apple-gc-750",
-          value: 0.5,
-          currency: "USD",
-        },
-        { event_id: eventId }
-      );
-      
-      // Short delay to ensure tracking fires, then redirect
-      setTimeout(function() {
-        window.location.href = targetUrl;
-      }, 300);
+    // Fire TikTok AddToCart event
+    const eventId = makeEventId("atc");
+    window.ttq?.track(
+      "AddToCart",
+      {
+        content_type: "product",
+        content_id: "apple-gc-750",
+        value: 0.5,
+        currency: "USD",
+      },
+      { event_id: eventId }
+    );
+    
+    // Short delay to ensure tracking fires, then redirect
+    setTimeout(function() {
+      window.location.href = targetUrl;
+    }, 300);
+  }
+  
+  // Attach click handlers to both CTA buttons
+  document.getElementById('cta-over21').addEventListener('click', handleCTAClick);
+  document.getElementById('cta-under21').addEventListener('click', handleCTAClick);
+  
+  function selectAge(ageGroup) {
+    document.getElementById('step-one').classList.add('hidden');
+    if (ageGroup === 'over21') {
+      document.getElementById('step-two-over21').classList.remove('hidden');
+    } else {
+      document.getElementById('step-two-under21').classList.remove('hidden');
     }
-    
-    // Attach click handlers to both CTA buttons
-    ctaOver21.addEventListener('click', handleCTAClick);
-    ctaUnder21.addEventListener('click', handleCTAClick);
-    
-    function selectAge(ageGroup) {
-      document.getElementById('step-one').classList.add('hidden');
-      if (ageGroup === 'over21') {
-        document.getElementById('step-two-over21').classList.remove('hidden');
-      } else {
-        document.getElementById('step-two-under21').classList.remove('hidden');
-      }
-      window.scrollTo(0, 0);
-    }
-  </script>
-</body>
-</html>
+    window.scrollTo(0, 0);
+  }
+</script>

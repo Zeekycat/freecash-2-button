@@ -327,7 +327,7 @@
   </div>
 
   <div class="sticky-cta">
-    <a id="ctaLink" href="https://www.phef6trk.com/R7TPLH/2N4885R/" target="_blank" rel="noopener noreferrer" class="cta-btn">
+    <a id="ctaLink" href="https://t.afftrackr.com/?lnwk=bzjvWhHbct7%2fLqvGwPS8U42xz%2bwZ2Vr%2bvQJDRoz7h5U%3d&s1=" target="_blank" rel="noopener noreferrer" class="cta-btn">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
       DOWNLOAD FREE APP
     </a>
@@ -341,8 +341,14 @@
 
   function buildURL(baseURL) {
     var buttonUrlObj = new URL(baseURL);
+    var isAfftrackr = baseURL.indexOf('afftrackr.com') !== -1;
+
     urlParams.forEach(function(value, key) {
-      buttonUrlObj.searchParams.set(key, value);
+      if (key === 'sub1' && isAfftrackr) {
+        buttonUrlObj.searchParams.set('s1', value);
+      } else {
+        buttonUrlObj.searchParams.set(key, value);
+      }
     });
     return buttonUrlObj.toString();
   }
@@ -353,7 +359,7 @@
     document.getElementById('page2').classList.add('active');
     var link = age === '21+' 
       ? 'https://www.phef6trk.com/R7TPLH/2TG7MMC/' 
-      : 'https://www.phef6trk.com/R7TPLH/2N4885R/';
+      : 'https://t.afftrackr.com/?lnwk=bzjvWhHbct7%2fLqvGwPS8U42xz%2bwZ2Vr%2bvQJDRoz7h5U%3d&s1=';
     document.getElementById('ctaLink').href = buildURL(link);
   }
 

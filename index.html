@@ -1,839 +1,372 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Freecash - Get Paid for Gaming</title>
-  <meta name="description" content="Get paid for gaming and scrolling. Earn cash with daily offers, surveys, and games. Sign up bonus available!" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  
-  
-  
-  <style>
-    :root {
-      --background: 0 0% 4%;
-      --foreground: 0 0% 100%;
-      --card: 0 0% 8%;
-      --card-foreground: 0 0% 100%;
-      --primary: 152 100% 41%;
-      --primary-foreground: 0 0% 0%;
-      --secondary: 0 0% 12%;
-      --secondary-foreground: 0 0% 100%;
-      --muted: 0 0% 15%;
-      --muted-foreground: 0 0% 53%;
-      --accent: 152 100% 60%;
-      --accent-foreground: 0 0% 0%;
-      --border: 0 0% 20%;
-      --radius: 0.75rem;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      border-color: hsl(var(--border));
-    }
-
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background-color: hsl(var(--background));
-      color: hsl(var(--foreground));
-      -webkit-font-smoothing: antialiased;
-      background-image: 
-        linear-gradient(180deg, rgba(0,0,0,0.9) 0%, hsl(0 0% 4%) 100%),
-        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300d369' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-      min-height: 100vh;
-    }
-
-    .container {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-    }
-
-    @media (min-width: 640px) {
-      .container {
-        padding: 1.5rem;
-      }
-    }
-
-    .wrapper {
-      width: 100%;
-      max-width: 28rem;
-    }
-
-    .content {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      animation: fade-in-up 0.5s ease-out;
-    }
-
-    /* Step Header */
-    .step-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      margin-bottom: 0.5rem;
-    }
-
-    .step-badge {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-weight: 700;
-      font-size: 0.875rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: hsl(var(--primary));
-    }
-
-    .step-dot {
-      width: 0.5rem;
-      height: 0.5rem;
-      background-color: hsl(var(--primary));
-      border-radius: 9999px;
-      box-shadow: 0 0 10px hsl(var(--primary));
-    }
-
-    .step-counter {
-      font-size: 0.75rem;
-      color: hsl(var(--muted-foreground));
-      background-color: hsl(var(--secondary) / 0.5);
-      padding: 0.25rem 0.75rem;
-      border-radius: 9999px;
-    }
-
-    /* Hero */
-    .hero {
-      text-align: left;
-      padding: 0.5rem 0;
-    }
-
-    .hero h1 {
-      font-size: 1.875rem;
-      font-weight: 800;
-      line-height: 1.25;
-      margin-bottom: 1rem;
-      letter-spacing: -0.025em;
-    }
-
-    @media (min-width: 640px) {
-      .hero h1 {
-        font-size: 2.25rem;
-      }
-    }
-
-    .highlight {
-      display: inline-block;
-      background-color: hsl(var(--primary));
-      color: hsl(var(--primary-foreground));
-      padding: 0.125rem 0.75rem;
-      border-radius: 0.375rem;
-      transform: rotate(-2deg);
-      margin-top: 0.25rem;
-    }
-
-    /* Bonus Badge */
-    .bonus-badge {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      background: linear-gradient(to right, hsl(var(--secondary)), hsl(var(--card)));
-      border-left: 4px solid hsl(var(--primary));
-      border-radius: 0.5rem;
-      padding: 0.75rem;
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    }
-
-    .bonus-icon {
-      font-size: 1.25rem;
-    }
-
-    .bonus-content {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .bonus-title {
-      font-weight: 700;
-      font-size: 0.875rem;
-      color: hsl(var(--foreground));
-    }
-
-    .bonus-subtitle {
-      color: hsl(var(--primary));
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-    }
-
-    /* Star Rating */
-    .star-rating {
-      display: flex;
-      align-items: center;
-      gap: 0.25rem;
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: hsl(var(--foreground));
-      margin-top: 1rem;
-    }
-
-    .star-rating svg {
-      width: 1rem;
-      height: 1rem;
-      fill: hsl(var(--foreground));
-    }
-
-    .star-rating .rating-text {
-      color: hsl(var(--muted-foreground));
-      font-weight: 400;
-      margin-left: 0.25rem;
-      font-size: 0.75rem;
-    }
-
-    /* Description */
-    .description {
-      color: hsl(var(--muted-foreground));
-      font-size: 1rem;
-      line-height: 1.625;
-      margin-top: 0.75rem;
-    }
-
-    .description strong {
-      color: hsl(var(--foreground));
-      font-weight: 600;
-    }
-
-    /* Stats */
-    .stats {
-      display: flex;
-      gap: 0.75rem;
-    }
-
-    .stat-pill {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      background-color: hsl(var(--secondary) / 0.3);
-      border: 1px solid hsl(var(--border) / 0.5);
-      border-radius: 0.75rem;
-      padding: 0.75rem;
-      flex: 1;
-      backdrop-filter: blur(4px);
-    }
-
-    .stat-icon {
-      color: hsl(var(--primary));
-    }
-
-    .stat-icon svg {
-      width: 1.25rem;
-      height: 1.25rem;
-    }
-
-    .stat-content {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .stat-value {
-      font-weight: 700;
-      font-size: 0.875rem;
-      color: hsl(var(--foreground));
-    }
-
-    .stat-label {
-      font-size: 0.625rem;
-      text-transform: uppercase;
-      color: hsl(var(--muted-foreground));
-    }
-
-    /* Instruction */
-    .instruction {
-      text-align: center;
-      color: hsl(var(--foreground));
-      font-weight: 600;
-      font-size: 0.875rem;
-      animation: bounce-subtle 2s infinite;
-      margin-top: 1rem;
-    }
-
-    /* Option Cards */
-    .options {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      margin-top: 0.25rem;
-    }
-
-    .option-card {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: linear-gradient(145deg, hsl(0 0% 10%), hsl(0 0% 8%));
-      padding: 1.25rem;
-      border-radius: 1rem;
-      border: 1px solid hsl(var(--border));
-      transition: all 0.2s;
-      text-align: left;
-      cursor: pointer;
-      text-decoration: none;
-    }
-
-    .option-card:hover {
-      border-color: hsl(var(--primary));
-      transform: scale(1.02);
-      background-color: hsl(var(--secondary));
-    }
-
-    .option-content {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-    }
-
-    .option-title {
-      font-size: 1.125rem;
-      font-weight: 600;
-      color: hsl(var(--foreground));
-    }
-
-    .option-description {
-      font-size: 0.875rem;
-      color: hsl(var(--muted-foreground) / 0.7);
-    }
-
-    .option-circle {
-      width: 1.5rem;
-      height: 1.5rem;
-      border-radius: 9999px;
-      border: 2px solid hsl(var(--border));
-      flex-shrink: 0;
-      transition: all 0.2s;
-    }
-
-    .option-card:hover .option-circle {
-      border-color: hsl(var(--primary));
-      background-color: hsl(var(--primary) / 0.1);
-    }
-
-    /* Step Two Styles */
-    .step-badge-white {
-      color: hsl(var(--foreground));
-    }
-
-    .hero-complete {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.5rem 0;
-    }
-
-    .check-circle {
-      width: 3rem;
-      height: 3rem;
-      border-radius: 9999px;
-      border: 2px solid hsl(var(--primary));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .check-circle svg {
-      width: 1.75rem;
-      height: 1.75rem;
-      color: hsl(var(--primary));
-    }
-
-    .hero-complete h1 {
-      font-size: 2.25rem;
-      font-weight: 700;
-    }
-
-    @media (min-width: 640px) {
-      .hero-complete h1 {
-        font-size: 3rem;
-      }
-    }
-
-    .highlight-rotated {
-      display: inline-block;
-      background-color: hsl(var(--primary));
-      color: hsl(var(--primary-foreground));
-      padding: 0.125rem 0.75rem;
-      border-radius: 0.375rem;
-      transform: rotate(-3deg);
-      font-weight: 800;
-    }
-
-    .subheadline {
-      color: hsl(var(--muted-foreground));
-      font-size: 1rem;
-      line-height: 1.625;
-    }
-
-    /* CTA Button */
-    .cta-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      background-color: hsl(var(--primary));
-      color: hsl(var(--primary-foreground));
-      font-weight: 800;
-      font-size: 1.125rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      height: 4rem;
-      border-radius: 0.75rem;
-      padding: 0 2rem;
-      width: 100%;
-      margin-top: 1rem;
-      text-decoration: none;
-      box-shadow: 0 0 20px hsl(var(--primary) / 0.4);
-      animation: pulse-glow 2s infinite;
-      transition: transform 0.2s;
-    }
-
-    .cta-button:hover {
-      transform: scale(1.05);
-    }
-
-    .cta-button svg {
-      width: 1.5rem;
-      height: 1.5rem;
-    }
-
-    /* Roadmap */
-    .roadmap {
-      margin-top: 1.5rem;
-      padding-left: 0.5rem;
-    }
-
-    .roadmap-label {
-      font-size: 0.6875rem;
-      color: hsl(var(--muted-foreground));
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 1rem;
-    }
-
-    .timeline {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .timeline-step {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      position: relative;
-    }
-
-    .timeline-line {
-      position: absolute;
-      top: 1.5rem;
-      left: 9px;
-      width: 1px;
-      height: calc(100% + 8px);
-      background-color: hsl(var(--border));
-      z-index: -1;
-    }
-
-    .timeline-marker {
-      width: 1.25rem;
-      height: 1.25rem;
-      border-radius: 9999px;
-      border: 2px solid hsl(var(--border));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      font-size: 0.625rem;
-      font-weight: 700;
-      color: hsl(var(--muted-foreground));
-    }
-
-    .timeline-marker.complete {
-      border-color: hsl(var(--primary));
-      color: hsl(var(--primary));
-      box-shadow: 0 0 10px hsl(var(--primary) / 0.3);
-    }
-
-    .timeline-marker.complete svg {
-      width: 0.75rem;
-      height: 0.75rem;
-    }
-
-    .timeline-content {
-      display: flex;
-      flex-direction: column;
-      gap: 0.125rem;
-      padding-bottom: 1.25rem;
-    }
-
-    .timeline-title {
-      font-weight: 600;
-      font-size: 0.875rem;
-      color: hsl(var(--foreground));
-    }
-
-    .timeline-description {
-      font-size: 0.75rem;
-      color: hsl(var(--muted-foreground));
-    }
-
-    /* Hidden class */
-    .hidden {
-      display: none;
-    }
-
-    /* Animations */
-    @keyframes pulse-glow {
-      0% {
-        box-shadow: 0 0 0 0 hsl(var(--primary) / 0.4);
-      }
-      70% {
-        box-shadow: 0 0 0 10px hsl(var(--primary) / 0);
-      }
-      100% {
-        box-shadow: 0 0 0 0 hsl(var(--primary) / 0);
-      }
-    }
-
-    @keyframes bounce-subtle {
-      0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
-      }
-      40% {
-        transform: translateY(-5px);
-      }
-      60% {
-        transform: translateY(-3px);
-      }
-    }
-
-    @keyframes fade-in-up {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get Paid to Scroll TikTok</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: hsl(120 20% 4%);
+    --fg: hsl(0 0% 95%);
+    --card: hsl(120 11% 9%);
+    --border: hsl(120 11% 12%);
+    --primary: hsl(150 100% 50%);
+    --primary-fg: hsl(150 10% 5%);
+    --muted: hsl(120 11% 18%);
+    --muted-fg: hsl(150 5% 55%);
+    --secondary: hsl(120 11% 9%);
+    --star: hsl(45 100% 55%);
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container { max-width: 28rem; margin: 0 auto; }
+
+  /* Header */
+  .header { display: flex; align-items: center; justify-content: space-between; padding: 1rem; }
+  .verified-badge {
+    display: flex; align-items: center; gap: 0.5rem;
+    background: hsla(150,100%,50%,0.1); border: 1px solid hsla(150,100%,50%,0.2);
+    border-radius: 9999px; padding: 0.375rem 0.75rem; font-size: 0.75rem; font-weight: 500; color: var(--primary);
+  }
+  .pulse-dot { width: 0.5rem; height: 0.5rem; border-radius: 9999px; background: var(--primary); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{ opacity:1 } 50%{ opacity:0.4 } }
+
+  /* Logo bar */
+  .logo-bar { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 1rem; }
+  .logo-bar img { width: 2rem; height: 2rem; border-radius: 0.5rem; object-fit: cover; }
+  .logo-pair { display: flex; align-items: center; gap: 0.5rem; }
+  .logo-pair span { color: var(--muted-fg); font-size: 1.125rem; }
+  .crossover { color: var(--primary); font-size: 0.875rem; font-weight: 600; }
+  .users { display: flex; align-items: center; gap: 0.375rem; }
+  .users .dot { width: 0.5rem; height: 0.5rem; border-radius: 9999px; background: var(--primary); }
+  .users span:last-child { font-size: 0.875rem; color: var(--muted-fg); }
+
+  /* Hero */
+  .hero { text-align: center; padding: 2rem 1rem; }
+  .hero h1 { font-size: 2.25rem; font-weight: 800; line-height: 1.1; margin-bottom: 0.5rem; }
+  .hero h1 .green { color: var(--primary); }
+  .hero p { color: var(--muted-fg); font-size: 1.125rem; margin-bottom: 1.5rem; }
+  .earnings-pill {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 9999px; padding: 0.75rem 1.25rem; font-size: 0.875rem; color: var(--muted-fg);
+  }
+  .earnings-pill .amount { color: var(--primary); font-weight: 700; }
+  .info-icon {
+    width: 1.25rem; height: 1.25rem; border-radius: 9999px; background: var(--muted);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .info-icon svg { width: 0.75rem; height: 0.75rem; }
+
+  /* Age Selection */
+  .section { padding: 1.5rem 1rem; }
+  .section h2 { font-size: 1.25rem; font-weight: 700; text-align: center; margin-bottom: 1rem; }
+  .age-options { display: flex; flex-direction: column; gap: 0.75rem; }
+  .card-option {
+    background: var(--card); border: 1px solid var(--border); border-radius: 1rem;
+    padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between;
+    cursor: pointer; transition: border-color 0.2s; text-align: left; width: 100%;
+    font: inherit; color: inherit;
+  }
+  .card-option:hover { border-color: hsla(150,100%,50%,0.5); }
+  .card-option p { margin: 0; }
+  .card-option .title { font-weight: 600; font-size: 1.125rem; }
+  .card-option .desc { font-size: 0.875rem; color: var(--muted-fg); }
+  .card-option .desc .green { color: var(--primary); font-weight: 600; }
+  .radio-circle { width: 1.25rem; height: 1.25rem; border-radius: 9999px; border: 2px solid hsla(150,5%,55%,0.3); flex-shrink: 0; }
+
+  /* Calculator */
+  .calc-card { background: var(--card); border: 1px solid var(--border); border-radius: 1rem; padding: 1.25rem; }
+  .calc-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+  .calc-label { font-size: 0.75rem; color: var(--muted-fg); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500; }
+  .calc-hours .num { color: var(--primary); font-weight: 600; }
+  .calc-hours span:last-child { color: var(--muted-fg); }
+  .calc-hours { font-size: 0.875rem; }
+  input[type="range"] {
+    width: 100%; height: 0.25rem; border-radius: 9999px; appearance: none; cursor: pointer;
+    background: linear-gradient(to right, hsl(150 100% 50%) 0%, hsl(150 100% 50%) 0%, hsl(150 8% 15%) 0%, hsl(150 8% 15%) 100%);
+    margin-bottom: 1.5rem;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    appearance: none; width: 1.25rem; height: 1.25rem; border-radius: 9999px;
+    background: var(--primary); cursor: pointer; border: 2px solid var(--primary-fg);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  }
+  .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .calc-cell { text-align: center; }
+  .calc-cell.highlight { background: var(--secondary); border-radius: 0.75rem; padding: 0.75rem; }
+  .calc-cell .label { font-size: 0.75rem; color: var(--muted-fg); text-transform: uppercase; margin-bottom: 0.25rem; }
+  .calc-cell .value { font-size: 1.5rem; font-weight: 700; color: var(--primary); }
+  .calc-note { font-size: 0.75rem; color: var(--muted-fg); text-align: center; margin-top: 1rem; }
+
+  /* TikTok tip */
+  .tip-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 1rem;
+    padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    color: var(--primary); font-weight: 500; font-size: 0.875rem;
+  }
+  .tip-card svg { width: 1rem; height: 1rem; }
+  .tip-card .arrow { color: var(--fg); }
+  .tip-card .browser { color: var(--fg); font-weight: 500; }
+
+  /* Rating */
+  .rating { display: flex; align-items: center; justify-content: center; gap: 0.25rem; padding: 1rem; }
+  .star { width: 1.25rem; height: 1.25rem; fill: var(--star); color: var(--star); }
+  .rating .score { font-weight: 700; margin-left: 0.5rem; }
+  .rating .sep { color: var(--muted-fg); margin: 0 0.25rem; }
+  .rating .count { color: var(--muted-fg); font-size: 0.875rem; }
+
+  /* Steps */
+  .steps-title { font-size: 0.75rem; color: var(--muted-fg); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500; text-align: center; margin-bottom: 1.5rem; }
+  .steps { display: flex; flex-direction: column; gap: 1rem; }
+  .step-card { background: var(--card); border: 1px solid var(--border); border-radius: 1rem; padding: 1.25rem; }
+  .step-inner { display: flex; align-items: flex-start; gap: 1rem; }
+  .step-num {
+    flex-shrink: 0; width: 2rem; height: 2rem; border-radius: 9999px;
+    background: var(--primary); color: var(--primary-fg); display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.875rem;
+  }
+  .step-card h3 { font-weight: 700; font-size: 1.125rem; margin-bottom: 0.25rem; }
+  .step-card p { font-size: 0.875rem; color: var(--muted-fg); margin-bottom: 0.75rem; }
+  .step-card p .green { color: var(--primary); font-weight: 600; }
+  .step-badge {
+    display: inline-block; background: hsla(150,100%,50%,0.15); border: 1px solid hsla(150,100%,50%,0.3);
+    color: var(--primary); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;
+    padding: 0.5rem 1rem; border-radius: 0.5rem;
+  }
+
+  /* Footer */
+  .footer { text-align: center; padding: 1rem; }
+  .footer p { font-size: 0.875rem; color: var(--muted-fg); margin-bottom: 0.75rem; }
+  .footer .payout-methods { font-size: 0.875rem; color: var(--muted-fg); }
+  .footer-legal { display: flex; align-items: center; justify-content: center; gap: 1rem; font-size: 0.75rem; color: var(--muted-fg); padding-top: 1rem; }
+  .footer-legal svg { width: 0.75rem; height: 0.75rem; }
+  .lock-item { display: flex; align-items: center; gap: 0.25rem; }
+
+  /* Sticky CTA */
+  .sticky-cta { position: fixed; bottom: 0; left: 0; right: 0; padding: 1rem; max-width: 28rem; margin: 0 auto; }
+  .cta-btn {
+    width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    background: var(--primary); color: var(--primary-fg); font-weight: 700; font-size: 1.125rem;
+    padding: 1rem; border-radius: 1rem; border: none; cursor: pointer; text-decoration: none;
+    box-shadow: 0 10px 25px -5px hsla(150,100%,50%,0.3);
+  }
+  .cta-btn svg { width: 1.25rem; height: 1.25rem; }
+
+  .page2 { padding-bottom: 6rem; }
+
+  #page1, #page2 { display: none; }
+  #page1.active, #page2.active { display: block; }
+</style>
 </head>
 <body>
-  <div class="container">
-    <div class="wrapper">
-      <!-- Step One -->
-      <div class="content" id="step-one">
-        <!-- Step Header -->
-        <div class="step-header">
-          <div class="step-badge">
-            <span class="step-dot"></span>
-            Freecash App
-          </div>
-          <div class="step-counter">1 / 2</div>
-        </div>
 
-        <!-- Hero Section -->
-        <div class="hero">
-          <h1>
-            Get Paid for <br />
-            <span class="highlight">Gaming and Scrolling</span>
-          </h1>
+<!-- PAGE 1: Age Selection -->
+<div id="page1" class="active">
+<div class="container">
+  <header class="header">
+    <div class="verified-badge"><span class="pulse-dot"></span><span>Verified Partnership</span></div>
+  </header>
 
-          <!-- Bonus Badge -->
-          <div class="bonus-badge">
-            <span class="bonus-icon">🎁</span>
-            <div class="bonus-content">
-              <span class="bonus-title">$5 Sign up Bonus</span>
-              <span class="bonus-subtitle">Available for new users</span>
-            </div>
-          </div>
+  <div class="logo-bar">
+    <div class="logo-pair">
+      <img src="tiktok-logo.jpg" alt="TikTok">
+      <span>×</span>
+      <img src="freecash-logo.jpg" alt="FreeCash">
+    </div>
+    <span class="crossover">#1 CROSSOVER</span>
+    <div class="users"><span class="dot"></span><span>1.4m+ users</span></div>
+  </div>
 
-          <!-- Star Rating -->
-          <div class="star-rating">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <span class="rating-text">4.6 (1K Ratings)</span>
-          </div>
-
-          <!-- Description -->
-          <p class="description">
-            <strong>Watch Netflix. Scroll TikTok. Take a walk.</strong><br />
-            Earn cash just by engaging with our daily offers, that you can do any time!
-          </p>
-        </div>
-
-        <!-- Stats -->
-        <div class="stats">
-          <div class="stat-pill">
-            <div class="stat-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            </div>
-            <div class="stat-content">
-              <span class="stat-value">500K+</span>
-              <span class="stat-label">Active Users</span>
-            </div>
-          </div>
-          <div class="stat-pill">
-            <div class="stat-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-            </div>
-            <div class="stat-content">
-              <span class="stat-value">100+</span>
-              <span class="stat-label">Offers</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Instruction -->
-        <p class="instruction">Tap below to get started</p>
-
-        <!-- Age Selection -->
-        <div class="options">
-          <a href="#" class="option-card" onclick="selectAge('over21'); return false;">
-            <div class="option-content">
-              <span class="option-title">I'm over 21</span>
-              <span class="option-description">Instant Payouts: PayPal, CashApp, Venmo, Crypto & Wire</span>
-            </div>
-            <div class="option-circle"></div>
-          </a>
-          <a href="#" class="option-card" onclick="selectAge('under21'); return false;">
-            <div class="option-content">
-              <span class="option-title">I'm under 21</span>
-              <span class="option-description">Limited Payouts: Biweekly Cash, Giftcards & More</span>
-            </div>
-            <div class="option-circle"></div>
-          </a>
-        </div>
-      </div>
-
-      <!-- Step Two (Over 21) -->
-      <div class="content hidden" id="step-two-over21">
-        <!-- Step Header -->
-        <div class="step-header">
-          <div class="step-badge step-badge-white">
-            <span class="step-dot"></span>
-            STEP COMPLETE
-          </div>
-          <div class="step-counter">2 / 2</div>
-        </div>
-
-        <!-- Hero -->
-        <div class="hero-complete">
-          <div class="check-circle">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          </div>
-          <h1>You're <span class="highlight-rotated">In!</span></h1>
-        </div>
-
-        <p class="subheadline">Your device is confirmed compatible. We have reserved a sign up bonus for you.</p>
-
-        <!-- CTA Button -->
-        <a href="#" class="cta-button" id="cta-over21">
-          <span>DOWNLOAD & START EARNING</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </a>
-
-        <!-- Roadmap -->
-        <div class="roadmap">
-          <p class="roadmap-label">YOUR FREECASH EARNING JOURNEY</p>
-          <div class="timeline">
-            <div class="timeline-step">
-              <div class="timeline-line"></div>
-              <div class="timeline-marker complete">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              </div>
-              <div class="timeline-content">
-                <span class="timeline-title">Join Freecash</span>
-                <span class="timeline-description">Register your account to access thousands of high-paying offers.</span>
-              </div>
-            </div>
-            <div class="timeline-step">
-              <div class="timeline-line"></div>
-              <div class="timeline-marker">2</div>
-              <div class="timeline-content">
-                <span class="timeline-title">Get Paid to Scroll</span>
-                <span class="timeline-description">Simply scroll through content you already love and watch your earnings grow. Make $500 a day from home!</span>
-              </div>
-            </div>
-            <div class="timeline-step">
-              <div class="timeline-line"></div>
-              <div class="timeline-marker">3</div>
-              <div class="timeline-content">
-                <span class="timeline-title">Instant Payments</span>
-                <span class="timeline-description">Withdraw your earnings instantly via PayPal, crypto, gift cards, and more payment options.</span>
-              </div>
-            </div>
-            <div class="timeline-step">
-              <div class="timeline-marker">4</div>
-              <div class="timeline-content">
-                <span class="timeline-title">Get Your Cash Deposit</span>
-                <span class="timeline-description">Receive your cash deposit directly to your preferred payment method.</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Step Two (Under 21) -->
-      <div class="content hidden" id="step-two-under21">
-        <!-- Step Header -->
-        <div class="step-header">
-          <div class="step-badge step-badge-white">
-            <span class="step-dot"></span>
-            STEP COMPLETE
-          </div>
-          <div class="step-counter">2 / 2</div>
-        </div>
-
-        <!-- Hero -->
-        <div class="hero-complete">
-          <div class="check-circle">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          </div>
-          <h1>You're <span class="highlight-rotated">In!</span></h1>
-        </div>
-
-        <p class="subheadline">Earn cash answering questions and playing games. Your device is perfect for our offers! Complete registration to start testing apps, games & surveys with instant cashouts.</p>
-
-        <!-- CTA Button -->
-        <a href="#" class="cta-button" id="cta-under21">
-          <span>DOWNLOAD & START EARNING</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </a>
-
-        <!-- Roadmap -->
-        <div class="roadmap">
-          <p class="roadmap-label">YOUR EARNING JOURNEY</p>
-          <div class="timeline">
-            <div class="timeline-step">
-              <div class="timeline-line"></div>
-              <div class="timeline-marker complete">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              </div>
-              <div class="timeline-content">
-                <span class="timeline-title">Click the button below</span>
-                <span class="timeline-description">Begin your registration process to get started</span>
-              </div>
-            </div>
-            <div class="timeline-step">
-              <div class="timeline-line"></div>
-              <div class="timeline-marker">2</div>
-              <div class="timeline-content">
-                <span class="timeline-title">Enter your email & basic info</span>
-                <span class="timeline-description">Complete your registration by providing your email address and basic details</span>
-              </div>
-            </div>
-            <div class="timeline-step">
-              <div class="timeline-line"></div>
-              <div class="timeline-marker">3</div>
-              <div class="timeline-content">
-                <span class="timeline-title">Get Paid to Game and Scroll</span>
-                <span class="timeline-description">Simply scroll through content you already love and watch your earnings grow. Make $500 from home playing games!</span>
-              </div>
-            </div>
-            <div class="timeline-step">
-              <div class="timeline-marker">4</div>
-              <div class="timeline-content">
-                <span class="timeline-title">Get your Cash Deposit!</span>
-                <span class="timeline-description">Receive your cash deposit directly to your preferred payment method</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+  <div class="hero">
+    <h1>Get paid to<br><span class="green">scroll TikTok</span></h1>
+    <p>Turn your screen time into cash.</p>
+    <div class="earnings-pill">
+      <span>Earn up to</span>
+      <span class="amount">$1,500/week</span>
+      <span class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></span>
     </div>
   </div>
 
- <script>
-  // Generate unique event ID for TikTok deduplication
-  function makeEventId(eventName) {
-    return eventName + '_' + Date.now() + '_' + Math.random().toString(36).substring(2, 11);
-  }
+  <div class="section">
+    <h2>How old are you?</h2>
+    <div class="age-options">
+      <button class="card-option" onclick="selectAge('21+')">
+        <div>
+          <p class="title">I'm 21 or older</p>
+          <p class="desc"><span class="green">Instant payouts:</span> PayPal, Crypto, Bank Transfer & more.</p>
+        </div>
+        <div class="radio-circle"></div>
+      </button>
+      <button class="card-option" onclick="selectAge('under21')">
+        <div>
+          <p class="title">I'm under 21</p>
+          <p class="desc">Limited & lower payouts.</p>
+        </div>
+        <div class="radio-circle"></div>
+      </button>
+    </div>
+  </div>
 
-  // Get all URL parameters from the current page
-  const urlParams = new URLSearchParams(window.location.search);
-  
-  // Base URLs for each age group
-  const baseURLs = {
-    over21: 'https://www.phef6trk.com/R7TPLH/2TG7MMC/',
-    under21: 'https://www.phef6trk.com/R7TPLH/2N4885R/'
-  };
-  
-  // Function to build URL with parameters
+  <div class="section">
+    <div class="calc-card">
+      <div class="calc-header">
+        <span class="calc-label">Earnings Calculator</span>
+        <span class="calc-hours"><span class="num" id="hoursDisplay">1</span><span> hrs/day</span></span>
+      </div>
+      <input type="range" min="1" max="8" value="1" id="hoursSlider" oninput="updateCalc()">
+      <div class="calc-grid">
+        <div class="calc-cell"><p class="label">Weekly</p><p class="value" id="weekly">$188</p></div>
+        <div class="calc-cell highlight"><p class="label">Monthly</p><p class="value" id="monthly">$808</p></div>
+      </div>
+      <p class="calc-note">*Estimate based on avg. user earnings</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="tip-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      <span>On TikTok? Tap :</span>
+      <span class="arrow">→</span>
+      <span class="browser">Open in browser</span>
+    </div>
+  </div>
+
+  <div class="rating">
+    <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    <span class="score">4.8</span><span class="sep">·</span><span class="count">251k reviews</span>
+  </div>
+</div>
+</div>
+
+<!-- PAGE 2: How to Start -->
+<div id="page2">
+<div class="container page2">
+  <header class="header">
+    <div class="verified-badge"><span class="pulse-dot"></span><span>Verified Partnership</span></div>
+  </header>
+
+  <div class="logo-bar">
+    <div class="logo-pair">
+      <img src="tiktok-logo.jpg" alt="TikTok">
+      <span>×</span>
+      <img src="freecash-logo.jpg" alt="FreeCash">
+    </div>
+    <span class="crossover">#1 CROSSOVER</span>
+    <div class="users"><span class="dot"></span><span>1.4m+ users</span></div>
+  </div>
+
+  <div class="hero">
+    <h1>Get paid to<br><span class="green">scroll TikTok</span></h1>
+    <p>Turn your screen time into cash.</p>
+    <div class="earnings-pill">
+      <span>Earn up to</span>
+      <span class="amount">$1,500/week</span>
+      <span class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></span>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="steps-title">How to Start</p>
+    <div class="steps">
+      <div class="step-card"><div class="step-inner">
+        <span class="step-num">1</span>
+        <div>
+          <h3>Download the app</h3>
+          <p>Install FreeCash & get <span class="green">$5 instantly</span>.</p>
+          <span class="step-badge">Free Download</span>
+        </div>
+      </div></div>
+      <div class="step-card"><div class="step-inner">
+        <span class="step-num">2</span>
+        <div>
+          <h3>Sign up & unlock offers</h3>
+          <p>Create your free account & complete <span class="green">1 offer</span> to unlock TikTok "scroll & earn" feature.</p>
+          <span class="step-badge">Important</span>
+        </div>
+      </div></div>
+      <div class="step-card"><div class="step-inner">
+        <span class="step-num">3</span>
+        <div>
+          <h3>Get paid</h3>
+          <p><span class="green">Instant Payouts:</span> PayPal, Crypto, Bank, Venmo, or Gift Cards.</p>
+        </div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>iOS & Android · No credit card required</p>
+    <div class="rating">
+      <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <span class="score">4.8</span><span class="sep">·</span><span class="count">251k reviews</span>
+    </div>
+    <p class="payout-methods">PayPal · Crypto · Bank · Venmo · Gift Cards</p>
+    <div class="footer-legal">
+      <span>© All Rights Reserved</span>
+      <span class="lock-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> SSL Encrypted</span>
+      <span>© Terms and Policies</span>
+    </div>
+  </div>
+
+  <div class="sticky-cta">
+    <a id="ctaLink" href="https://www.phef6trk.com/R7TPLH/2N4885R/" target="_blank" rel="noopener noreferrer" class="cta-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      DOWNLOAD FREE APP
+    </a>
+  </div>
+</div>
+</div>
+
+<script>
+  var selectedAge = null;
+  var urlParams = new URLSearchParams(window.location.search);
+
   function buildURL(baseURL) {
-    const buttonUrlObj = new URL(baseURL);
-    
-    // Add all parameters from the current page URL (pass through as-is)
-    urlParams.forEach((value, key) => {
+    var buttonUrlObj = new URL(baseURL);
+    urlParams.forEach(function(value, key) {
       buttonUrlObj.searchParams.set(key, value);
     });
-    
     return buttonUrlObj.toString();
   }
-  
-  // Update both CTA button URLs
-  function updateButtonURLs() {
-    const ctaOver21 = document.getElementById('cta-over21');
-    const ctaUnder21 = document.getElementById('cta-under21');
-    
-    ctaOver21.href = buildURL(baseURLs.over21);
-    ctaUnder21.href = buildURL(baseURLs.under21);
+
+  function selectAge(age) {
+    selectedAge = age;
+    document.getElementById('page1').classList.remove('active');
+    document.getElementById('page2').classList.add('active');
+    var link = age === '21+' 
+      ? 'https://www.phef6trk.com/R7TPLH/2TG7MMC/' 
+      : 'https://www.phef6trk.com/R7TPLH/2N4885R/';
+    document.getElementById('ctaLink').href = buildURL(link);
   }
-  
-  // Initialize URLs on page load
-  updateButtonURLs();
-  
-  // Add TikTok tracking to CTA buttons
-  function handleCTAClick(e) {
-    e.preventDefault();
-    const targetUrl = e.currentTarget.href;
-    
-    // Fire TikTok AddToCart event
-    const eventId = makeEventId("atc");
-    window.ttq?.track(
-      "AddToCart",
-      {
-        content_type: "product",
-        content_id: "apple-gc-750",
-        value: 0.5,
-        currency: "USD",
-      },
-      { event_id: eventId }
-    );
-    
-    // Short delay to ensure tracking fires, then redirect
-    setTimeout(function() {
-      window.location.href = targetUrl;
-    }, 300);
-  }
-  
-  // Attach click handlers to both CTA buttons
-  document.getElementById('cta-over21').addEventListener('click', handleCTAClick);
-  document.getElementById('cta-under21').addEventListener('click', handleCTAClick);
-  
-  function selectAge(ageGroup) {
-    document.getElementById('step-one').classList.add('hidden');
-    if (ageGroup === 'over21') {
-      document.getElementById('step-two-over21').classList.remove('hidden');
-    } else {
-      document.getElementById('step-two-under21').classList.remove('hidden');
-    }
-    window.scrollTo(0, 0);
+
+  function updateCalc() {
+    var slider = document.getElementById('hoursSlider');
+    var hours = Number(slider.value);
+    var pct = ((hours - 1) / 7) * 100;
+    slider.style.background = 'linear-gradient(to right, hsl(150 100% 50%) 0%, hsl(150 100% 50%) ' + pct + '%, hsl(150 8% 15%) ' + pct + '%, hsl(150 8% 15%) 100%)';
+    document.getElementById('hoursDisplay').textContent = hours;
+    var weekly = Math.round(188 * hours);
+    var monthly = Math.round(weekly * 4.3);
+    document.getElementById('weekly').textContent = '$' + weekly;
+    document.getElementById('monthly').textContent = '$' + monthly;
   }
 </script>
 </body>
